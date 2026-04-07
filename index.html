@@ -66,15 +66,73 @@
       padding: 2.5rem 1.5rem 4rem;
     }
 
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+    /* Tab Navigation */
+    .tab-nav {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.3rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid transparent;
+      background: var(--white);
+      color: var(--muted);
+      box-shadow: 0 2px 6px rgba(1,105,111,0.08);
+      transition: all 0.15s;
+    }
+    .tab-btn:hover {
+      border-color: var(--teal);
       color: var(--teal);
-      margin-bottom: 1rem;
-      padding-bottom: 0.4rem;
-      border-bottom: 2px solid var(--teal);
+    }
+    .tab-btn.active {
+      background: var(--teal-dark);
+      color: var(--white);
+      border-color: var(--teal-dark);
+      box-shadow: 0 4px 12px rgba(1,105,111,0.2);
+    }
+    .tab-btn .tab-icon { font-size: 1.1rem; }
+
+    .section-block {
+      margin-bottom: 3rem;
+    }
+    .section-block.hidden { display: none; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      background: var(--teal-dark);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 1rem 1.4rem;
+      margin-bottom: 1.4rem;
+    }
+    .section-header .sec-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+    .section-header .sec-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    .section-header .sec-title {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    .section-header .sec-sub {
+      font-size: 0.75rem;
+      color: #a8d4d6;
+      font-weight: 400;
     }
 
     /* Plakat-Grid: breitere Karten für Vorschau */
@@ -268,13 +326,33 @@
 
 <main>
 
+  <!-- Tab Navigation -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('plakate')">
+      <span class="tab-icon">🖼️</span> Plakate
+    </button>
+    <button class="tab-btn" onclick="showTab('bausteine')">
+      <span class="tab-icon">📝</span> Textbausteine
+    </button>
+    <button class="tab-btn" onclick="showTab('tools')">
+      <span class="tab-icon">🔗</span> Digitale Tools
+    </button>
+  </nav>
+
   <div class="info">
     <strong>Frei verwendbar.</strong> Alle Materialien dürfen ohne Einschränkung in der eigenen Praxis oder Klinik genutzt werden. Kein Login, keine Registrierung.
     Erstellt von <strong>Dr. med. Kristin Koschny</strong>, Assistenzärztin Gastroenterologie.
   </div>
 
+  <div class="section-block" id="tab-plakate">
   <!-- PLAKATE -->
-  <div class="section-label">Patientenplakate (A3, druckfertig)</div>
+  <div class="section-header">
+    <span class="sec-icon">🖼️</span>
+    <div class="sec-text">
+      <span class="sec-title">Patientenplakate</span>
+      <span class="sec-sub">A3, druckfertig — direkt im Browser ansehen oder herunterladen</span>
+    </div>
+  </div>
   <div class="grid-poster">
 
     <div class="card-poster">
@@ -413,9 +491,17 @@
     </div>
 
   </div>
+  </div><!-- /section-block Plakate -->
 
+  <div class="section-block hidden" id="tab-bausteine">
   <!-- ARZTBRIEF-TEXTBAUSTEINE -->
-  <div class="section-label">Arztbrief- &amp; Befund-Textbausteine</div>
+  <div class="section-header">
+    <span class="sec-icon">📝</span>
+    <div class="sec-text">
+      <span class="sec-title">Arztbrief- &amp; Befund-Textbausteine</span>
+      <span class="sec-sub">DOCX-Vorlagen zum Kopieren — leitliniengerecht, direkt einsetzbar</span>
+    </div>
+  </div>
   <div class="grid">
 
     <div class="card">
@@ -447,9 +533,17 @@
     </div>
 
   </div>
+  </div><!-- /section-block Bausteine -->
 
+  <div class="section-block hidden" id="tab-tools">
   <!-- WEITERE TOOLS -->
-  <div class="section-label">Weitere Tools</div>
+  <div class="section-header" style="background: var(--teal);">
+    <span class="sec-icon">🔗</span>
+    <div class="sec-text">
+      <span class="sec-title">Digitale Tools &amp; Infoportale</span>
+      <span class="sec-sub">Interaktive Seiten für Patienten — QR-Code scannen oder direkt öffnen</span>
+    </div>
+  </div>
   <div class="grid">
 
     <div class="card">
@@ -495,6 +589,7 @@
     </div>
 
   </div>
+  </div><!-- /section-block Tools -->
 
 </main>
 
@@ -507,5 +602,17 @@
   </p>
 </footer>
 
+<script>
+  function showTab(name) {
+    // Alle Sections verstecken
+    document.querySelectorAll('.section-block').forEach(el => el.classList.add('hidden'));
+    // Alle Buttons deaktivieren
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    // Gewählte Section zeigen
+    document.getElementById('tab-' + name).classList.remove('hidden');
+    // Gewählten Button aktivieren
+    event.currentTarget.classList.add('active');
+  }
+</script>
 </body>
 </html>
