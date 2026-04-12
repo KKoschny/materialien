@@ -313,6 +313,95 @@
       line-height: 1.6;
     }
     .info strong { color: var(--teal-dark); }
+
+    /* ── Modal Preview ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(12, 78, 84, 0.55);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 14px;
+      max-width: 760px;
+      width: 100%;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      overflow: hidden;
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 1.5rem;
+      background: var(--teal-dark);
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .modal-header h2 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.6rem;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.85;
+      transition: opacity 0.15s;
+      padding: 0 0.2rem;
+    }
+    .modal-close:hover { opacity: 1; }
+    .modal-body {
+      overflow-y: auto;
+      padding: 1.8rem 2rem;
+      flex: 1;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: #1a1a1a;
+    }
+    .modal-body p { margin-bottom: 0.75rem; }
+    .modal-body strong { color: var(--teal-dark); }
+    .modal-body em { color: #666; font-size: 0.87rem; }
+    .modal-body h1, .modal-body h2, .modal-body h3 {
+      color: var(--teal-dark);
+      margin: 1.2rem 0 0.4rem;
+      font-size: 1rem;
+    }
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      background: #f5f9f9;
+      border-top: 1px solid #dde;
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+      flex-shrink: 0;
+    }
+    .btn-preview {
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.55rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-preview:hover { background: var(--teal-dark); }
+
   </style>
 </head>
 <body>
@@ -538,28 +627,28 @@
       <div class="card-icon icon-docx">📋</div>
       <h3>H. pylori</h3>
       <p>Screening Erstgradigverwandte, Routinefall mit Eradikation &amp; Eradikationsversagen, Probiotika, Haushaltsmitglieder &amp; Familienanamnese.</p>
-      <a class="btn btn-docx" href="HP_Arztbrief_Textbausteine.docx" download>↓ DOCX herunterladen</a>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><button class="btn-preview" onclick="openPreview('hp')">👁 Vorschau</button><a class="btn btn-docx" href="HP_Arztbrief_Textbausteine.docx" download style="text-decoration:none;padding:0.55rem 1.1rem;border-radius:8px;font-size:0.9rem;font-weight:600;">↓ DOCX</a></div>
     </div>
 
     <div class="card">
       <div class="card-icon icon-docx">🧬</div>
       <h3>Lynch-Syndrom</h3>
       <p>Koloskopie-Befund bei Surveillance, ASS 75–100 mg zur Chemoprävention, humangenetische Beratung, H.-pylori-Screening (MSH2), Pankreaskarzinom-Risiko.</p>
-      <a class="btn btn-docx" href="Lynch_Arztbrief_Textbausteine.docx" download>↓ DOCX herunterladen</a>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><button class="btn-preview" onclick="openPreview('lynch')">👁 Vorschau</button><a class="btn btn-docx" href="Lynch_Arztbrief_Textbausteine.docx" download style="text-decoration:none;padding:0.55rem 1.1rem;border-radius:8px;font-size:0.9rem;font-weight:600;">↓ DOCX</a></div>
     </div>
 
     <div class="card">
       <div class="card-icon icon-docx">🧬</div>
       <h3>Hereditäre Keimbahnmutationen</h3>
       <p>≥10 Adenome (FAP/MAP), diffuses Magenkarzinom / CDH1, hereditäres Pankreaskarzinom (BRCA1/2, PALB2, ATM).</p>
-      <a class="btn btn-docx" href="Keimbahnmutationen_Arztbrief_Textbausteine.docx" download>↓ DOCX herunterladen</a>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><button class="btn-preview" onclick="openPreview('keimbahn')">👁 Vorschau</button><a class="btn btn-docx" href="Keimbahnmutationen_Arztbrief_Textbausteine.docx" download style="text-decoration:none;padding:0.55rem 1.1rem;border-radius:8px;font-size:0.9rem;font-weight:600;">↓ DOCX</a></div>
     </div>
 
     <div class="card">
       <div class="card-icon icon-docx">🩺</div>
       <h3>Pankreatitis – Nachsorge</h3>
       <p>Schwere/nekrotisierende Pankreatitis, kryptogene Pankreatitis &gt; 40 J., alkohol-induzierte Pankreatitis. Leitliniengerecht nach DGVS S3 2024.</p>
-      <a class="btn btn-docx" href="Pankreatitis_Arztbrief_Textbausteine.docx" download>↓ DOCX herunterladen</a>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><button class="btn-preview" onclick="openPreview('pankreatitis')">👁 Vorschau</button><a class="btn btn-docx" href="Pankreatitis_Arztbrief_Textbausteine.docx" download style="text-decoration:none;padding:0.55rem 1.1rem;border-radius:8px;font-size:0.9rem;font-weight:600;">↓ DOCX</a></div>
     </div>
 
   </div>
@@ -651,5 +740,77 @@
     event.currentTarget.classList.add('active');
   }
 </script>
+
+  <!-- ── Modal Preview Overlay ── -->
+  <div class="modal-overlay" id="previewModal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="modalTitle">Vorschau</h2>
+        <button class="modal-close" id="modalCloseBtn" aria-label="Schließen">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer">
+        <a class="btn btn-ghost" id="modalDownload" href="#" download style="text-decoration:none; padding:0.55rem 1.2rem; border-radius:8px; font-size:0.9rem; font-weight:600; border:2px solid var(--teal); color:var(--teal);">↓ DOCX herunterladen</a>
+        <button class="modal-close btn-preview" onclick="document.getElementById('previewModal').classList.remove('open')">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  const PREVIEWS = {
+    hp: {
+      title: "H. pylori – Arztbrief-Textbausteine",
+      file:  "HP_Arztbrief_Textbausteine.docx",
+      html:  `<p><strong>H. pylori – Textbausteine</strong></p><p><em>Dr. med. K. Koschny · Gastroenterologie · GFGB 2026</em></p><p><strong>Baustein 1 – Screening Erstgradigverwandte bei Magenkarzinom</strong></p><p>Bei nachgewiesenem Magenkarzinom empfehlen wir entsprechend der aktuellen Leitlinien ein Screening erstgradig Verwandter auf Helicobacter pylori. Bei positivem Nachweis sollte eine Eradikation eingeleitet werden.</p><p>─────────────────────────────────────────</p><p><strong>Baustein 2 – Positiver H. pylori-Nachweis (Routinefall)</strong></p><p>Befund: Helicobacter-pylori-Infektion gesichert (Nachweis via [¹³C-Atemtest / Stuhl-Antigen / Histologie]).</p><p>Empfehlung: Wir empfehlen eine Eradikationstherapie als Bismuth-Quadruple-Therapie (Pylera® × 10 Tage).</p><p>Eradikationskontrolle: Wir empfehlen eine Kontrolle frühestens 4 Wochen nach Therapieende, bevorzugt mittels ¹³C-Harnstoff-Atemtest oder H.-pylori-Stuhl-Antigen (beide gleichwertig valide). PPI-Pause mindestens 2 Wochen, Antibiotika-Pause mindestens 4 Wochen vor dem Test.</p><p><strong>Eradikationsversagen:</strong></p><p>Bei Therapieversagen (persistierender Nachweis nach Eradikationskontrolle) empfehlen wir eine Resistenztestung (Kultur und Antibiogramm aus Magenbiopsien) vor Einleitung einer Rescue-Therapie. Eine empirische Zweitlinientherapie ohne Resistenzdiagnostik ist bei steigenden Clarithromycin- und Metronidazol-Resistenzraten nicht empfehlenswert.</p><p>─────────────────────────────────────────</p><p><strong>Baustein 3 – Probiotika begleitend zur Eradikationstherapie</strong></p><p>Bei Risikopatienten — z. B. nach vorherigem Therapieabbruch, bekannter Unverträglichkeit oder gastrointestinaler Beschwerden unter Antibiotika — kann der begleitende Einsatz von Probiotika erwogen werden.</p><p>Probiotika können die Eradikationsrate verbessern und gastrointestinale Nebenwirkungen (Diarrhö, Übelkeit) reduzieren. Geeignete Präparate: Bifidobacterium longum, Lactobacillus-Spezies oder Saccharomyces boulardii — idealerweise bereits einige Tage vor Therapiebeginn starten.</p><p><strong>Cave: Probiotika nicht zeitgleich mit dem Antibiotikum einnehmen – mindestens 2 Stunden Abstand einhalten.</strong></p><p>─────────────────────────────────────────</p><p><strong>Baustein 4 – Haushaltsmitglieder</strong></p><p>Wir weisen darauf hin, dass H. pylori intrafamiliär übertragen werden kann. Ein routinemäßiges Screening asymptomatischer Haushaltsmitglieder ist leitliniengemäß nicht generell empfohlen. Eine Testung empfehlen wir bei Dyspepsie-Symptomatik, Herkunft aus einem Hochprävalenzland oder auf ausdrücklichen Patientenwunsch.<br /><br />Im Rahmen der Magenkrebs-Prävention empfehlen wir darüber hinaus eine gezielte Familienanamnese hinsichtlich gastraler Malignome. Bei entsprechender Familienanamnese (Magenkarzinom bei Erstgradigverwandten) befürworten wir ein Test-and-Treat-Vorgehen für H. pylori — auch bei asymptomatischen Angehörigen — als niedrigschwellige und evidenzbasierte Präventionsmaßnahme.</p><p><em>Dr. med. Kristin Koschny · Assistenzärztin Gastroenterologie · GFGB-Jahrestagung 2026</em></p>`
+    },
+    lynch: {
+      title: "Lynch-Syndrom – Arztbrief-Textbausteine",
+      file:  "Lynch_Arztbrief_Textbausteine.docx",
+      html:  `<p><strong>Lynch-Syndrom – Textbaustein</strong></p><p><em>Dr. med. K. Koschny · Gastroenterologie · GFGB 2026</em></p><p><strong>Koloskopie-Befund bei Lynch-Syndrom</strong></p><p>Koloskopie-Indikation: Surveillance bei Lynch-Syndrom ([Mutation]).</p><p>[Befundbeschreibung: z. B. Kein Polyp nachweisbar. / Polyp abgetragen, Histologie angefordert.]</p><p><strong>1.  ASS zur Chemoprävention</strong></p><p>Bei gesichertem Lynch-Syndrom empfehlen wir die tägliche Einnahme von ASS 75–100 mg (enteric coated) zur Chemoprävention des kolorektalen Karzinoms. Bitte ggf. mit dem weiterbehandelnden Arzt besprechen.</p><p><em>Cave: ASS ist in dieser Indikation Off-Label. Aufklärung und Dokumentation empfohlen.</em></p><p><strong>2.  Humangenetische Beratung</strong></p><p>Bei Erstdiagnose eines Lynch-Syndroms empfehlen wir eine humangenetische Beratung sowie eine Keimbahndiagnostik der MMR-Gene (MLH1, MSH2, MSH6, PMS2, EPCAM), sofern noch nicht erfolgt. Erstgradig Verwandte sollten ebenfalls beraten und ggf. getestet werden.</p><p><strong>3.  H.-pylori-Screening</strong></p><p>Bei Nachweis einer MSH2-Mutation empfehlen wir ein Screening auf Helicobacter pylori sowie eine Eradikation bei positivem Nachweis, da MSH2-Träger ein erhöhtes Risiko für Magenkarzinome aufweisen.</p><p><strong>4.  Pankreaskarzinom-Risiko</strong></p><p>Lynch-Träger (insbesondere MLH1- und MSH2-Mutation) haben ein moderat erhöhtes Risiko für ein Pankreaskarzinom. Bei positiver Pankreas-Familienanamnese empfehlen wir eine individuelle Risikoberatung und ggf. Surveillance nach Maßgabe eines spezialisierten Zentrums.</p><p>───────────────────────────────────────────────────────</p><p><em>Dr. med. Kristin Koschny · Assistenzärztin Gastroenterologie · GFGB-Jahrestagung 2026</em></p>`
+    },
+    lynch_ass: {
+      title: "Lynch + ASS – Arztbrief-Textbaustein",
+      file:  "Lynch_ASS_Arztbrief_Textbausteine.docx",
+      html:  `<p><strong>Lynch-Syndrom – Textbaustein</strong></p><p><em>Dr. med. K. Koschny · Gastroenterologie · GFGB 2026</em></p><p><strong>Koloskopie-Befund bei Lynch-Syndrom</strong></p><p>Koloskopie-Indikation: Surveillance bei Lynch-Syndrom ([Mutation]).</p><p>[Befundbeschreibung: z. B. Kein Polyp nachweisbar. / Polyp abgetragen, Histologie angefordert.]</p><p>1. ASS zur Chemoprävention: Bei gesichertem Lynch-Syndrom empfehlen wir die tägliche Einnahme von ASS 100 mg (enteric coated) zur Chemoprävention des kolorektalen Karzinoms. Bitte ggf. mit dem weiterbehandelnden Arzt besprechen.</p><p>2. Humangenetische Beratung: Bei Erstdiagnose eines Lynch-Syndroms empfehlen wir eine humangenetische Beratung sowie eine Keimbahndiagnostik der MMR-Gene (MLH1, MSH2, MSH6, PMS2, EPCAM), sofern noch nicht erfolgt. Erstgradig Verwandte sollten ebenfalls beraten werden.</p><p>3. H.-pylori-Screening: Bei Nachweis einer MSH2-Mutation empfehlen wir ein Screening auf Helicobacter pylori sowie eine Eradikation bei positivem Nachweis, da MSH2-Träger ein erhöhtes Risiko für Magenkarzinome aufweisen.</p><p><em>ASS ist in dieser Indikation Off-Label. Aufklärung und Dokumentation empfohlen.</em></p><p>───────────────────────────────────────────────────────</p><p><strong>Baustein 2 – Hereditäres Pankreaskarzinom (BRCA1/2 · PALB2 · ATM)</strong></p><p><strong>BRCA1/2-Mutation</strong></p><p>Bei dem Patienten / der Patientin wurde eine BRCA1/2-Keimbahnmutation nachgewiesen. Wir empfehlen eine Vorstellung in einer humangenetischen Beratungsstelle zur Familienberatung und Testung erstgradig Verwandter. Therapeutisch ist die Mutation relevant: Bei metastasiertem BRCA1/2-mutiertem Pankreaskarzinom ist eine Therapie mit PARP-Inhibitoren (Olaparib) zugelassen; wir empfehlen eine Besprechung im interdisziplinären Tumorboard.</p><p>Zur Früherkennung empfehlen wir bei Mutationsträgern mit positiver Pankreas-Familienanamnese eine Surveillance mittels Endosonographie und/oder MRT-MRCP ab dem 50. Lebensjahr (bzw. 10 Jahre vor dem jüngsten Erkrankungsalter in der Familie) gemäß CAPS-Konsortium-Leitlinien.</p><p><strong>PALB2-Mutation</strong></p><p>Bei dem Patienten / der Patientin wurde eine PALB2-Keimbahnmutation nachgewiesen. PALB2 ist nach BRCA2 der zweithäufigste hereditäre Risikofaktor für das Pankreaskarzinom und ebenfalls mit einem erhöhten Mammakarzinomrisiko assoziiert. Wir empfehlen eine humangenetische Beratung und Testung erstgradig Verwandter sowie eine Surveillance wie bei BRCA2 (s.o.).</p><p><strong>ATM-Mutation</strong></p><p>Bei dem Patienten / der Patientin wurde eine heterozygote ATM-Keimbahnmutation nachgewiesen. ATM-Mutationen sind mit einem 2–5-fach erhöhten Pankreaskarzinomrisiko assoziiert. Wir empfehlen eine humangenetische Beratung. Bei positiver Familienanamnese für Pankreaskarzinom empfehlen wir eine Surveillance analog den CAPS-Empfehlungen.</p><p><em>Surveillance-Empfehlungen basieren auf den CAPS-Konsortium-Leitlinien (Gastroenterology 2020). Individuelle Risikostratifizierung in Absprache mit einem spezialisierten Zentrum empfohlen.</em></p><p>───────────────────────────────────────────────────────</p><p><em>Dr. med. Kristin Koschny · Assistenzärztin Gastroenterologie · GFGB-Jahrestagung 2026</em></p>`
+    },
+    keimbahn: {
+      title: "Hereditäre Keimbahnmutationen – Textbausteine",
+      file:  "Keimbahnmutationen_Arztbrief_Textbausteine.docx",
+      html:  `<p><strong>Hereditäre Keimbahnmutationen – Textbausteine</strong></p><p><em>Dr. med. K. Koschny · Gastroenterologie · GFGB 2026</em></p><p><strong>Zufallsbefund ≥10 Adenome in der Koloskopie</strong></p><p>Gemäß S3-Leitlinie Kolorektales Karzinom (Version 3.2, März 2026) empfehlen wir bei Nachweis von mehr als 10 Adenomen in der Koloskopie — unabhängig vom Alter und auch bei Zufallsbefund im Rahmen der Vorsorgekoloskopie — eine humangenetische Beratung zum Ausschluss eines hereditären Polyposis-Syndroms (insbesondere attenuierte FAP/APC-Mutation, MUTYH-assoziierte Polyposis).</p><p>───────────────────────────────────────────────────────</p><p><strong>Diffuses Magenkarzinom (Verdacht HDGC / CDH1-Mutation)</strong></p><p>Bei dem Patienten / der Patientin wurde histologisch ein Magenkarzinom vom diffusen Typ (Siegelringzellkarzinom / lobuläres Wachstumsmuster) nachgewiesen. Wir empfehlen die Erhebung einer ausführlichen Familienanamnese hinsichtlich diffuser Magenkarzinome und lobulärer Mammakarzinome über mindestens drei Generationen. Bei Erfüllung der IGCLC-Kriterien — insbesondere bei ≥2 Fällen von diffusem Magenkarzinom in der Familie (davon mindestens einer vor dem 50. Lebensjahr), bei diffusem Magenkarzinom vor dem 35. Lebensjahr, oder bei Kombination mit lobulärem Mammakarzinom — empfehlen wir eine humangenetische Beratung und ggf. CDH1-Keimbahndiagnostik.</p><p>───────────────────────────────────────────────────────</p><p><strong>Hereditäres Pankreaskarzinom (BRCA1/2 · PALB2 · ATM)</strong></p><p><strong>BRCA1/2-Mutation</strong></p><p>Bei dem Patienten / der Patientin wurde eine BRCA1/2-Keimbahnmutation nachgewiesen. Wir empfehlen eine Vorstellung in einer humangenetischen Beratungsstelle zur Familienberatung und Testung erstgradig Verwandter.</p><p>Zur Früherkennung empfehlen wir bei Mutationsträgern mit positiver Pankreas-Familienanamnese eine Surveillance mittels Endosonographie und/oder MRT-MRCP ab dem 50. Lebensjahr (bzw. 10 Jahre vor dem jüngsten Erkrankungsalter in der Familie) gemäß CAPS-Konsortium-Leitlinien.</p><p><strong>PALB2-Mutation</strong></p><p>Bei dem Patienten / der Patientin wurde eine PALB2-Keimbahnmutation nachgewiesen. PALB2 ist nach BRCA2 der zweithäufigste hereditäre Risikofaktor für das Pankreaskarzinom und ebenfalls mit einem erhöhten Mammakarzinomrisiko assoziiert. Wir empfehlen eine humangenetische Beratung und Testung erstgradig Verwandter sowie eine Surveillance wie bei BRCA2 (s.o.).</p><p><strong>ATM-Mutation</strong></p><p>Bei dem Patienten / der Patientin wurde eine heterozygote ATM-Keimbahnmutation nachgewiesen. ATM-Mutationen sind mit einem 2–5-fach erhöhten Pankreaskarzinomrisiko assoziiert. Wir empfehlen eine humangenetische Beratung. Bei positiver Familienanamnese für Pankreaskarzinom empfehlen wir eine Surveillance analog den CAPS-Empfehlungen.</p><p><em>Surveillance-Empfehlungen basieren auf den CAPS-Konsortium-Leitlinien (Gastroenterology 2020). Individuelle Risikostratifizierung in Absprache mit einem spezialisierten Zentrum empfohlen.</em></p><p>───────────────────────────────────────────────────────</p><p><em>Dr. med. Kristin Koschny · Assistenzärztin Gastroenterologie · GFGB-Jahrestagung 2026</em></p>`
+    },
+    pankreatitis: {
+      title: "Pankreatitis – Arztbrief-Textbausteine",
+      file:  "Pankreatitis_Arztbrief_Textbausteine.docx",
+      html:  `<p><strong>Pankreatitis – Textbausteine</strong></p><p><em>Dr. med. K. Koschny · Gastroenterologie · GFGB 2026 · DGVS S3-Leitlinie 2024</em></p><p><strong>Schwere / nekrotisierende Pankreatitis</strong></p><p>Im Rahmen des stationären Aufenthalts bestand eine schwere/nekrotisierende Pankreatitis (Schweregrad: __). Gemäß DGVS-S3-Leitlinie 2024 (Empfehlung 10.1) empfehle ich eine strukturierte gastroenterologische Nachsorge:</p><p>– Kontrolltermin nach 4–6 Wochen (klinisch, Labor, Bildgebung)</p><p>– Jährliche Verlaufskontrolle für mindestens 5 Jahre</p><p>– Überwachung auf exokrine Insuffizienz (Elastase im Stuhl), endokrine Insuffizienz (HbA1c, Nüchternglukose) und Neoplasieentwicklung</p><p>– Bei Alkohol-induzierter Pankreatitis: Alkoholkarenz und strukturierte Suchtberatung dringend empfohlen (RCT-Evidenz: Rezidivreduktion um 50 %)</p><p>Bitte Vorstellung in gastroenterologischer Ambulanz zeitnah veranlassen.</p><p><strong>Kryptogene Pankreatitis &gt;40 Jahre</strong></p><p>Nachweis einer Pankreatitis ungeklärter Ätiologie bei einem Patienten &gt;40 Jahren. Gemäß DGVS-S3-Leitlinie 2024 besteht bei kryptogener Pankreatitis und Alter &gt;40 Jahren eine Indikation zur erweiterten Abklärung und strukturierten Bildgebungs-Nachsorge zum Ausschluss einer Neoplasie (IPMN, PDAC).</p><p>Empfehlung:</p><p>– EUS oder MRT/MRCP (bevorzugte Modalität) zum Ausschluss von Pankreaszysten (IPMN) und Raumforderungen</p><p>– CA 19-9 (cave: eingeschränkte Spezifität bei Pankreatitis)</p><p>– Bei unauffälligem Befund: jährliche Bildgebung für 2 Jahre, dann reevaluieren</p><p>– Bei Nachweis von Pankreaszysten: Nachsorge gemäß europäischer IPMN-Leitlinie</p><p>– Malignitätsverdacht: zeitnahe Vorstellung im zertifizierten Pankreaszentrum</p><p><strong>Alkohol-induzierte Pankreatitis (jeder Schweregrad)</strong></p><p>Alkohol-induzierte Pankreatitis, Schweregrad: __. Eine randomisierte Studie (120 Patienten) zeigt, dass strukturierte Nachsorge mit Alkoholberatung das Rezidivrisiko innerhalb von 24 Monaten von 21 % auf 8 % senkt (p=0,04; DGVS S3-Leitlinie 2024, Empfehlung 10.1).</p><p>Empfehlung:</p><p>– Dringende Alkoholkarenz – vollständige Abstinenz ist der einzige gesicherte Schutz vor Rezidiv und Progression zur chronischen Pankreatitis</p><p>– Überweisung zu Suchtmedizin / strukturierter Alkoholberatung</p><p>– Nachsorge in gastroenterologischer Ambulanz nach 4–6 Wochen</p><p>– Bei Rezidiv: erneute vollständige Abklärung inkl. Bildgebung</p><p><em>Dr. med. Kristin Koschny · Assistenzärztin Gastroenterologie · GFGB-Jahrestagung 2026</em></p>`
+    },
+    genetik: {
+      title: "Genetische Beratung – Textbausteine",
+      file:  "Genetische_Beratung_Textbausteine.docx",
+      html:  `<p><strong>Genetische Beratung – Textbausteine</strong></p><p><em>Dr. med. K. Koschny · Gastroenterologie · GFGB 2026</em></p><p><strong>Baustein 1 – Hereditäres kolorektales Karzinom / Polyposis-Syndrome</strong></p><p>Im Rahmen der gastroenterologischen Vorsorge und Nachsorge empfehlen wir eine humangenetische Beratung bei folgenden Konstellationen:</p><p><strong>Lynch-Syndrom (hereditäres nicht-polypöses KRK, HNPCC)</strong></p><p>Indikation: Nachweis einer Mikrosatelliteninstabilität (MSI-H) oder eines Mismatch-Repair-Defekts (dMMR) im Tumorgewebe; Verlust eines MMR-Proteins (MLH1, MSH2, MSH6, PMS2) in der Immunhistochemie; Erfüllung der revidierten Bethesda-Kriterien; KRK-Erstdiagnose vor dem 70. Lebensjahr (leitliniengemäße Reflextest-Empfehlung nach S3-Leitlinie KRK 2024).</p><p>Empfehlung: Wir empfehlen eine humangenetische Beratung und ggf. Keimbahndiagnostik der MMR-Gene (MLH1, MSH2, MSH6, PMS2, EPCAM). Erstgradig Verwandte sollten ebenfalls beraten und ggf. auf eine Mutation getestet werden.</p><p><strong>Familiäre adenomatöse Polyposis (FAP) — APC-Mutation</strong></p><p>Indikation: Nachweis von ≥10 kolorektalen Adenomen (klassische FAP: &gt;100 Adenome; attenuierte FAP: 10–99 Adenome); positive Familienanamnese für FAP oder desmoidassoziierte Tumoren.</p><p>Empfehlung: Humangenetische Beratung und APC-Keimbahndiagnostik. Bei gesicherter Mutation: Surveillance und prophylaktische Kolektomie nach interdisziplinärer Abwägung; Familienscreening erstgradig Verwandter.</p><p><strong>MUTYH-assoziierte Polyposis (MAP) — MUTYH-Mutation</strong></p><p>Indikation: 10–100 kolorektale Adenome ohne nachweisbare APC-Mutation; autosomal-rezessiver Erbgang möglich (biallele MUTYH-Mutation).</p><p>Empfehlung: Humangenetische Beratung und MUTYH-Keimbahndiagnostik (beide Allele). Geschwister von MAP-Patienten haben ein 25%iges Erkrankungsrisiko und sollten beraten werden.</p><p><strong>Weitere Polyposis-Syndrome</strong></p><p>Peutz-Jeghers-Syndrom (STK11-Mutation): Indikation bei hamartomatösen Polypen und/oder periorifzieller Melaninpigmentierung. Erhöhtes Risiko für KRK, Magen-, Dünndarm-, Pankreas- und Mammakarzinom.</p><p>Juvenile Polyposis (SMAD4 / BMPR1A-Mutation): Indikation bei ≥5 juvenilen Polypen im Kolorektum oder juvenilen Polypen im gesamten GI-Trakt. Cave: SMAD4-Mutation assoziiert mit hereditärer hämorrhagischer Teleangiektasie (HHT).</p><p>───────────────────────────────────────────────────────</p><p><strong>Baustein 2 – Hereditäres Magenkarzinom</strong></p><p><strong>Hereditary Diffuse Gastric Cancer (HDGC) — CDH1-Mutation</strong></p><p>Indikation (gemäß IGCLC-Leitlinien 2020): Zwei oder mehr Fälle von diffusem Magenkarzinom (DGC) in der Familie, davon mindestens einer vor dem 50. Lebensjahr; ein Fall von DGC und ein Fall von lobulärem Mammakarzinom in der Familie; bilaterales lobuläres Mammakarzinom vor dem 70. Lebensjahr; DGC vor dem 35. Lebensjahr (unabhängig von Familienanamnese); Siegelringzell-Karzinom-Anteil &gt;10% in der Histologie bei positiver Familienanamnese.</p><p>Empfehlung: Humangenetische Beratung und CDH1-Keimbahndiagnostik. Bei gesicherter Mutation: Prophylaktische totale Gastrektomie nach Aufklärung und interdisziplinärer Abwägung; jährliche Überwachungsgastroskopie bei Mutationsträgern, die keine Gastrektomie wünschen (Cambridge-Protokoll mit Zufallsbiopsien).</p><p><strong>Lynch-Syndrom mit erhöhtem Magenrisiko (MSH2-Mutation)</strong></p><p>MSH2-Mutationsträger haben ein erhöhtes Risiko für Magenkarzinome (kumulatives Risiko bis zu 10%). Bei gesichertem Lynch-Syndrom und positiver Magenanamnese oder Herkunft aus einem H.-pylori-Hochprävalenzland empfehlen wir zusätzlich eine H.-pylori-Eradikation und regelmäßige Überwachungsgastroskopie nach individueller Risikostratifizierung.</p><p>───────────────────────────────────────────────────────</p><p><strong>Baustein 3 – Hereditäres Pankreaskarzinom</strong></p><p>Das hereditäre Pankreaskarzinom macht ca. 5–10% aller Pankreaskarzinome aus. Eine humangenetische Beratung empfehlen wir bei folgenden Konstellationen:</p><p><strong>BRCA1/2-Mutation</strong></p><p>Indikation: Mindestens zwei erstgradig oder zweitgradig Verwandte mit Pankreaskarzinom; bekannte BRCA1/2-Mutation in der Familie; Pankreaskarzinom in Kombination mit Mamma-, Ovarial- oder Prostatakarzinom in der Familienanamnese.</p><p>Klinische Relevanz: BRCA2-Mutationsträger haben ein ca. 5–10-fach erhöhtes Pankreaskarzinom-Risiko. Therapeutisch relevant: PARP-Inhibitoren (Olaparib) sind bei BRCA-mutiertem, metastasiertem Pankreaskarzinom zugelassen — eine Keimbahndiagnostik hat daher direkte therapeutische Konsequenz.</p><p><strong>PALB2-Mutation</strong></p><p>Indikation: Familiäre Häufung von Pankreaskarzinom, insbesondere in Kombination mit Mammakarzinom. PALB2 ist nach BRCA2 der zweithäufigste hereditäre Risikofaktor für Pankreaskarzinom.</p><p><strong>ATM-Mutation</strong></p><p>Heterozygote ATM-Keimbahnmutationen sind mit einem 2–5-fach erhöhten Pankreaskarzinom-Risiko assoziiert. Indikation zur Beratung bei familiärer Häufung von Pankreaskarzinom oder kombiniertem Auftreten mit Mamma- oder Prostatakarzinom.</p><p><strong>Lynch-Syndrom (MLH1, MSH2, MSH6, PMS2)</strong></p><p>Lynch-Syndrom-Träger haben ein moderat erhöhtes Pankreaskarzinom-Risiko. Bei bekanntem Lynch-Syndrom und positiver Pankreas-Familienanamnese individuelle Surveillance-Empfehlung nach Leitlinie.</p><p><strong>Surveillance bei gesicherter Hochrisiko-Konstellation</strong></p><p>Bei gesicherter hereditärer Risikokonstellation (BRCA2, PALB2, ATM, Lynch) und mindestens einem weiteren betroffenen Erstgradigverwandten empfehlen wir eine Surveillance-Endosonographie und/oder MRT-MRCP ab dem 50. Lebensjahr (oder 10 Jahre vor dem jüngsten Erkrankungsalter in der Familie) gemäß den Empfehlungen der CAPS-Konsortium-Leitlinien.</p><p>───────────────────────────────────────────────────────</p><p><em>Dr. med. Kristin Koschny · Assistenzärztin Gastroenterologie · GFGB-Jahrestagung 2026</em></p>`
+    },
+  };
+
+  function openPreview(key) {
+    const p = PREVIEWS[key];
+    if (!p) return;
+    document.getElementById('modalTitle').textContent  = p.title;
+    document.getElementById('modalBody').innerHTML     = p.html;
+    document.getElementById('modalDownload').href      = p.file;
+    document.getElementById('modalDownload').download  = p.file;
+    document.getElementById('previewModal').classList.add('open');
+    document.getElementById('modalBody').scrollTop = 0;
+  }
+
+  document.getElementById('modalCloseBtn').addEventListener('click', () =>
+    document.getElementById('previewModal').classList.remove('open'));
+  document.getElementById('previewModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('previewModal'))
+      document.getElementById('previewModal').classList.remove('open');
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('previewModal').classList.remove('open');
+  });
+  </script>
+
 </body>
 </html>
